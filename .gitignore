@@ -1,1 +1,29 @@
+# AOAI/OAI config
 settings.json
+
+
+
+# CSharp stuff
+# Build results
+bin/
+obj/
+*.cache
+
+# Visual Studio files
+.vs/
+*.suo
+*.user
+*.sln.docstates
+
+# Resharper files
+_resharper*
+
+# NuGet packages
+*.nupkg
+packages/
+
+# MSTest test Results
+TestResults/
+
+# User-specific files
+*.userprefs
