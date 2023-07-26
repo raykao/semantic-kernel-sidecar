@@ -11,14 +11,7 @@ namespace semantic_kernel_sidecar.Controllers;
 [Route("[controller]")]
 public class SemanticSkillsController : ControllerBase
 {
-    private static readonly string[] Summaries = new[]
-    {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
-
     private readonly ILogger<SemanticSkillsController> _logger;
-
-
     private static readonly KernelBuilder _builder = new KernelBuilder();
     private readonly List<SemanticSkill> _semanticSkillsList = new List<Dictionary<string, ISKFunction>>();
 
