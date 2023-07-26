@@ -20,7 +20,7 @@ public class SemanticSkillsController : ControllerBase
 
 
     private static readonly KernelBuilder _builder = new KernelBuilder();
-    private readonly List<SemanticSkill> _semanticSkillsList = new List<SemanticSkill>();
+    private readonly List<SemanticSkill> _semanticSkillsList = new List<Dictionary<string, ISKFunction>>();
 
     
     public SemanticSkillsController(ILogger<SemanticSkills> logger)
@@ -42,16 +42,14 @@ public class SemanticSkillsController : ControllerBase
         var planner = new SequentialPlanner(_kernel);
 
         string[] subdirectories = Directory.GetDirectories(directoryPath);
-    
-        semanticSkillsMutableArray = new NSMutableArray();
-        
+            
         foreach (string subdirectoryPath in subdirectories)
         {
             string skillName = Path.GetFileName(subdirectoryPath);
             var skill = _kernel.ImportSemanticSkillFromDirectory(directoryPath, skillName);
-            if (skill is SemanticSkill)
+            if (skill is Dictionary<string, ISKFunction>)
             {
-                _semanticSkillsList.Add((SemanticSkill)skill);
+                _semanticSkillsList.Add((Dictionary<string, ISKFunction>)skill);
                 Console.WriteLine($"loaded {skillName} from {directoryPath}");
             }
             else
