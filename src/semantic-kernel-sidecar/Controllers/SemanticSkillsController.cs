@@ -23,6 +23,7 @@ public class SemanticSkillsController : ControllerBase
     private readonly List<SemanticSkill> _semanticSkillsList = new List<Dictionary<string, ISKFunction>>();
 
     
+    // This is the constructor for the SemanticSkillsController - it should auto load the skills from the /SemanticSkills directory which is mounted to the container
     public SemanticSkillsController(ILogger<SemanticSkills> logger)
     {
         _logger = logger;
@@ -59,16 +60,29 @@ public class SemanticSkillsController : ControllerBase
         }
     }
 
+    // this shoudl return all the skills in the /SemanticSkills directory and any that have been created via the CreateNewSkill method
     [HttpGet(Name = "GetSemanticSkills")]
     public IEnumerable<SemanticSkill> Get()
     {
         return _semanticSkillsList;
     }
 
-    [HttpPost(Name = "Invoke")]
+    [HttpPost("{skillName}/{subskillName}", Name = "Invoke")]
+    public IActionResult Invoke(string skillName, string subskillName)
+    {
+
+        // TODO: Implement Invoke method
+        // This should be able to call the specific skill and subskill
+        return null;
+
+    }
+
+    [HttpPost(Name = "CreateNewSkill")]
     public IEnumerable<SemanticSkill> Get()
     {
-        // TODO: Implement Invoke method
+        // TODO: Implement createnewskill method
+        // This should allow the developer to post a JSON object to create a new skill over http similar to creating an inline skill
+        // This should also persist the skill to disk (i.e. save to the /SemanticSkills directory)
         return null;
 
     }
