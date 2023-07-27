@@ -8,7 +8,7 @@ RUN dotnet restore
 # Copy everything else and build
 COPY src/semantic-kernel-sidecar /app/
 # Build
-RUN dotnet publish -c Release
+RUN dotnet publish -c Release -o sksidecar
 
 
 
@@ -17,7 +17,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:7.0 as RUNTIME
 # Set the working directory
 WORKDIR /app
 # Copy the build artifacts from the BUILD stage
-COPY --from=BUILD /app/out .
+COPY --from=BUILD /app/sksidecar .
 # Set the entrypoint
 ENTRYPOINT ["dotnet", "semantic-kernel-sidecar.dll"]
 # Set the port
