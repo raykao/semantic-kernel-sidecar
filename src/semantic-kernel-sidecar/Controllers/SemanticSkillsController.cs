@@ -60,60 +60,58 @@ public class SemanticSkillsController : ControllerBase
     {
         // return a list of all the skills in _semanticSkillsList as a json object
         return Ok(_semanticSkillsList);
-        
     }
 
     [HttpPost("invoke/{skillName}/{subSkillName}", Name = "Invoke")]
     public async Task<IActionResult> InvokeSkill(string skillName, string subSkillName)
     {
-        Console.WriteLine($"skillName: {skillName}");
+        Console.WriteLine($"Executing Skill: {skillName}");
 
         var skill = _semanticSkillsList[skillName];
 
         try {
             var result = await skill[subSkillName].InvokeAsync("time travel to dinosaur age");
+            var responseObj = new { response = result.Result.Replace("\n", "") };
 
-            Console.WriteLine(result);
-
-            return Ok();
+            return Ok(responseObj);
         }
         catch(Exception ex)
         {
             Console.WriteLine($"Exception: {ex.Message}");
-
             return StatusCode(500, $"An error occurred: {ex}");
         }
-
-    
-        // // // TODO: Implement Invoke method
-        // // // This should be able to call the specific skill and subskill
-        
-        // try {
-        //     var skill = _semanticSkillsList.Find(s => s.ContainsKey(skillName));
-        //     if (skill == null)
-        //     {
-        //         return NotFound($"Skill '{skillName}' not found");
-        //     }
-
-        //     var subskill = skill[skillName];
-
-        //     if (subskill == null)
-        //     {
-        //         return NotFound($"Subskill '{subSkillName}' not found for skill '{skillName}'");
-        //     }
-
-        //     var userQuestion = requestBody.userQuestion.ToString();
-
-        //     var result = await subskill.InvokeAsync(userQuestion);
-
-        //     return Ok(result);
-        // }
-        // catch (Exception ex) 
-        // {
-        //     return StatusCode(500, $"An error occurred: {ex.Message}");
-        // }
     }
 }
+
+
+// // // TODO: Implement Invoke method
+// // // This should be able to call the specific skill and subskill
+
+// try {
+//     var skill = _semanticSkillsList.Find(s => s.ContainsKey(skillName));
+//     if (skill == null)
+//     {
+//         return NotFound($"Skill '{skillName}' not found");
+//     }
+
+//     var subskill = skill[skillName];
+
+//     if (subskill == null)
+//     {
+//         return NotFound($"Subskill '{subSkillName}' not found for skill '{skillName}'");
+//     }
+
+//     var userQuestion = requestBody.userQuestion.ToString();
+
+//     var result = await subskill.InvokeAsync(userQuestion);
+
+//     return Ok(result);
+// }
+// catch (Exception ex) 
+// {
+//     return StatusCode(500, $"An error occurred: {ex.Message}");
+// }
+
 
 //     [HttpPost(Name = "CreateSkill")]
 //     public IActionResult CreateSkill()
@@ -124,4 +122,3 @@ public class SemanticSkillsController : ControllerBase
 //         return Ok();
 
 //     }
-// }
