@@ -1,5 +1,7 @@
 using Microsoft.SemanticKernel;
 using System.Text.Json;
+using System.IO;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,18 +16,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IKernel>(provider =>
 {
     var builder = new KernelBuilder();
+    var (useAzureOpenAI, model, azureEndpoint, apiKey, orgId) = SKSettings.LoadFromFile("settings.json");
 
-    var baseDirectory = AppDomain.CurrentDomain.BaseDirectory;
-    var settingsFilePath = Path.Combine(baseDirectory, "settings.json");
-
-    // Load the settings from the file
-    var settingsJson = File.ReadAllText(settingsFilePath);
-
-    var (model, apiKey, orgId) = JsonSerializer.Deserialize<(string, string, string)>(settingsJson);
-
-    // var (model, apiKey, orgId) = Settings.LoadFromFile();
-
-    builder.WithOpenAITextCompletionService(model, apiKey, orgId);
+    if (useAzureOpenAI)
+        builder.WithAzureTextCompletionService(model, azureEndpoint, apiKey);
+    else
+        builder.WithOpenAITextCompletionService(model, apiKey, orgId);
 
     IKernel kernel = builder.Build();
 
