@@ -27,3 +27,5 @@ TestResults/
 
 # User-specific files
 *.userprefs
+
+settings.json
