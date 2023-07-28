@@ -1,0 +1,6 @@
+POST http://localhost:5030/SemanticSkills/Invoke/FunSkill/Joke
+content-type: application/json
+
+{
+    "request": "time travel to dinosaur age"
+}
