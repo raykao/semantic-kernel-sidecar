@@ -21,6 +21,6 @@ docker build -t sk-sidecar .
 ## Run the container
 
 ```:bash
-docker run -it --rm -p 5000:5030 -v ${PWD}/src/semantic-kernel-sidecar/settings.json:/app/settings.json -v ${PWD}/src/semantic-kernel-sidecar/SemanticSkills:/app/SemanticSkills sk-sidecar
-docker run -it --rm -p 5000:5030 -v <path/to>/settings.json:/app/settings.json -v <path/to>/SemanticSkills:/app/SemanticSkills sk-sidecar
+docker run -it --rm -p 5000:8080 -v ${PWD}/src/semantic-kernel-sidecar/settings.json:/app/settings.json -v ${PWD}/src/semantic-kernel-sidecar/SemanticSkills:/app/SemanticSkills sk-sidecar
+docker run -it --rm -p 5000:8080 -v <path/to>/settings.json:/app/settings.json -v <path/to>/SemanticSkills:/app/SemanticSkills sk-sidecar
 ```
