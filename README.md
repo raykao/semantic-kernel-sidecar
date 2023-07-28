@@ -8,3 +8,19 @@ Following similar design principles adopted from other sidecar/proxy type projec
 
 1. Configuration (AOAI/OAI connection strings and settings) are loaded via a secret/config map file in the container's file path (/config/settings.json)
 1. All "Semantic Skills" are loaded in via single shared file store, where each skill is it's own separately named folder that contains two files (eg. skills/WriterSkill/[config.json, skprommpt.txt]).  The goal being that skills can be added, updated and loaded via this folder structure convention even during run time.  This means there are no inline Semantic Templates and templates will only be loaded via the shared/loaded file share (e.g. Azure Files or Blob Storage)
+
+
+## Build the container
+
+```:bash
+cd src/semantic-kernel-sidecar
+
+docker build -t sk-sidecar .
+```
+
+## Run the container
+
+```:bash
+docker run -it --rm -p 5000:5030 -v ${PWD}/src/semantic-kernel-sidecar/settings.json:/app/settings.json -v ${PWD}/src/semantic-kernel-sidecar/SemanticSkills:/app/SemanticSkills sk-sidecar
+docker run -it --rm -p 5000:5030 -v <path/to>/settings.json:/app/settings.json -v <path/to>/SemanticSkills:/app/SemanticSkills sk-sidecar
+```
