@@ -63,14 +63,14 @@ public class SemanticSkillsController : ControllerBase
     }
 
     [HttpPost("invoke/{skillName}/{subSkillName}", Name = "Invoke")]
-    public async Task<IActionResult> InvokeSkill(string skillName, string subSkillName)
+    public async Task<IActionResult> InvokeSkill(string skillName, string subSkillName, [FromBody] SemanticAsk semanticAsk)
     {
         Console.WriteLine($"Executing Skill: {skillName}");
 
         var skill = _semanticSkillsList[skillName];
 
         try {
-            var result = await skill[subSkillName].InvokeAsync("time travel to dinosaur age");
+            var result = await skill[subSkillName].InvokeAsync(semanticAsk.request);
             var responseObj = new { response = result.Result.Replace("\n", "") };
 
             return Ok(responseObj);
